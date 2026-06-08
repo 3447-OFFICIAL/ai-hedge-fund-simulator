@@ -7,7 +7,7 @@
 [![LangGraph](https://img.shields.io/badge/LangGraph-0.1.0-orange.svg)](https://python.langchain.com/docs/langgraph)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-green.svg)](https://openai.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/ai-hedge-fund-simulator?style=social)](https://github.com/yourusername/ai-hedge-fund-simulator)
+[![GitHub Stars](https://img.shields.io/github/stars/3447-OFFICIAL/ai-hedge-fund-simulator?style=social)](https://github.com/3447-OFFICIAL/ai-hedge-fund-simulator)
 
 </div>
 
@@ -94,7 +94,7 @@ Built for the most demanding quantitative environments, the platform includes:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/ai-hedge-fund-simulator.git
+git clone https://github.com/3447-OFFICIAL/ai-hedge-fund-simulator.git
 cd ai-hedge-fund-simulator
 
 # 2. Create and activate a virtual environment

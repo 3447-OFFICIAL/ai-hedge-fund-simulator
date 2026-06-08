@@ -23,7 +23,7 @@ Thank you for your interest in contributing to the AI Hedge Fund Simulator! We a
 
 ## Development Environment Setup
 
-1. Clone your fork: `git clone https://github.com/yourusername/ai-hedge-fund-simulator.git`
+1. Clone your fork: `git clone https://github.com/3447-OFFICIAL/ai-hedge-fund-simulator.git`
 2. Create a virtual environment: `python -m venv venv`
 3. Install development dependencies: `pip install -r requirements.txt`
 4. Set up pre-commit hooks (if configured).
