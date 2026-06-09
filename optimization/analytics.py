@@ -2,18 +2,23 @@ import pandas as pd
 import numpy as np
 from typing import Dict
 
+
 class InstitutionalAnalytics:
     def __init__(self, risk_free_rate: float = 0.02):
         self.risk_free_rate = risk_free_rate
 
-    def calculate_sharpe_ratio(self, returns: pd.Series, periods_per_year: int = 252) -> float:
+    def calculate_sharpe_ratio(
+        self, returns: pd.Series, periods_per_year: int = 252
+    ) -> float:
         """Calculate annualized Sharpe Ratio"""
         if returns.std() == 0:
             return 0.0
         excess_returns = returns - (self.risk_free_rate / periods_per_year)
         return float(np.sqrt(periods_per_year) * excess_returns.mean() / returns.std())
 
-    def calculate_sortino_ratio(self, returns: pd.Series, periods_per_year: int = 252) -> float:
+    def calculate_sortino_ratio(
+        self, returns: pd.Series, periods_per_year: int = 252
+    ) -> float:
         """Calculate annualized Sortino Ratio"""
         excess_returns = returns - (self.risk_free_rate / periods_per_year)
         downside_returns = np.where(excess_returns < 0, excess_returns, 0)
@@ -29,7 +34,9 @@ class InstitutionalAnalytics:
         max_drawdown = drawdown.min()
         return float(max_drawdown)
 
-    def calculate_var_historical(self, returns: pd.Series, confidence_level: float = 0.95) -> float:
+    def calculate_var_historical(
+        self, returns: pd.Series, confidence_level: float = 0.95
+    ) -> float:
         """Calculate historical Value at Risk (VaR)"""
         return float(np.percentile(returns, 100 * (1 - confidence_level)))
 
@@ -42,5 +49,5 @@ class InstitutionalAnalytics:
             "Sharpe Ratio": self.calculate_sharpe_ratio(returns),
             "Sortino Ratio": self.calculate_sortino_ratio(returns),
             "Maximum Drawdown": self.calculate_max_drawdown(prices),
-            "VaR (95%)": self.calculate_var_historical(returns)
+            "VaR (95%)": self.calculate_var_historical(returns),
         }

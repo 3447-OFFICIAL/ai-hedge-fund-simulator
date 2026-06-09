@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from typing import List, Dict
 import datetime
 
+
 class NewsScraper:
     def __init__(self):
         self.headers = {
@@ -24,26 +25,28 @@ class NewsScraper:
             response = requests.get(rss_url, headers=self.headers, timeout=10)
             if response.status_code != 200:
                 return []
-                
+
             # Use 'xml' parser for RSS
-            soup = BeautifulSoup(response.content, 'xml')
-            items = soup.find_all('item')
-            
+            soup = BeautifulSoup(response.content, "xml")
+            items = soup.find_all("item")
+
             news_list = []
             for item in items:
                 title = item.title.text if item.title else ""
                 link = item.link.text if item.link else ""
                 pubDate = item.pubDate.text if item.pubDate else ""
                 description = item.description.text if item.description else ""
-                
-                news_list.append({
-                    "title": title,
-                    "link": link,
-                    "published_at": pubDate,
-                    "description": description,
-                    "source": "Yahoo Finance RSS"
-                })
-                
+
+                news_list.append(
+                    {
+                        "title": title,
+                        "link": link,
+                        "published_at": pubDate,
+                        "description": description,
+                        "source": "Yahoo Finance RSS",
+                    }
+                )
+
             return news_list
         except Exception as e:
             print(f"Error fetching RSS news for {ticker}: {e}")
