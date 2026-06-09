@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Enterprise CI/CD Pipeline
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  lint-and-test:
     runs-on: ubuntu-latest
     
     steps:
@@ -21,17 +21,33 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install -r requirements.txt
+        pip install ruff black mypy bandit trivy safety pytest pytest-asyncio pytest-cov
         
-    - name: Lint with flake8
+    - name: Format with Black
+      run: black --check .
+      
+    - name: Lint with Ruff
+      run: ruff check .
+      
+    - name: Type checking with Mypy
+      run: mypy . --ignore-missing-imports
+      
+    - name: Security scan (Bandit)
+      run: bandit -r . -ll -ii
+      
+    - name: Dependency vulnerability scan (Safety)
+      run: safety check -r requirements.txt
+      
+    - name: Run Tests with Coverage
+      env:
+        OPENAI_API_KEY: "dummy-key-for-testing"
+        HEDGE_FUND_API_KEY: "default-dev-key"
       run: |
-        pip install flake8
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        pytest tests/ --cov=./ --cov-report=xml
         
-    # - name: Run tests with pytest
-    #   run: |
-    #     pip install pytest
-    #     pytest
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: false

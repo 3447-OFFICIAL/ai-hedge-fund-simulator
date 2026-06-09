@@ -1,4 +1,4 @@
-from pypfopt.expected_returns import mean_historical_return
+from pypfopt.expected_returns import capm_return
 from pypfopt.risk_models import CovarianceShrinkage
 from pypfopt.efficient_frontier import EfficientFrontier
 from pypfopt.discrete_allocation import DiscreteAllocation
@@ -17,8 +17,8 @@ class PortfolioOptimizer:
             cleaned_weights: Dict of ticker -> weight
             performance: Tuple of (expected_return, annual_volatility, sharpe_ratio)
         """
-        # Calculate expected returns and sample covariance
-        mu = mean_historical_return(historical_prices)
+        # Calculate expected returns using CAPM for better stability than mean historical
+        mu = capm_return(historical_prices)
         S = CovarianceShrinkage(historical_prices).ledoit_wolf()
 
         # Optimize for maximal Sharpe ratio
